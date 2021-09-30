@@ -30,7 +30,6 @@
         }
 
         .panel {
-            background-color: red;
             width: 600px;
             min-height: 400px;
         }
@@ -46,11 +45,11 @@
         }
 
         .typed {
-            min-width: 600px;
+            max-width: 600px;
             position: absolute;
             top: 0;
             border-color: transparent;
-            color: #008;
+            color: rgb(98, 98, 99);
             background-color: #eea6;
             overflow: hidden;
         }
@@ -86,16 +85,70 @@
 </body>
 
 <script>
-    const test = "if God had gifted me with some beauty and much wealth, I should have made it as hard for you to leave me, as it is now for me to leave you. I am not talking to you now through the medium of custom, conventionalities, nor even of mortal flesh: it is my spirit that addresses your spirit; just as if both had passed through the grave, and we stood at God’s feet, equal — as we are!"
-    
-    function wait(ms){
-        return new Promise( (resolve) => {
-            setTimeout(resolve(),ms);
+    const text = "if God had gifted me with some beauty and much wealth, I should have made it as hard for you to leave me, as it is now for me to leave you. I am not talking to you now through the medium of custom, conventionalities, nor even of mortal flesh: it is my spirit that addresses your spirit; just as if both had passed through the grave, and we stood at God’s feet, equal — as we are!"
+
+    function wait(ms) {
+        return new Promise((resolve) => {
+            setTimeout(resolve, ms);
         })
     }
-    
-    const panel = document.getElementsByClassName("pannel")[0];
-    panel.addEventListener('click', main);
+
+    async function starting(el, count = 3) {
+        el.innerText = count;
+        while (count--) {
+            await wait(1000);
+            el.innerText = count;
+        }
+        el.innerText = '';
+    }
+
+    function* typings(text) {
+        for (let i = 0; i < text.length; i++) {
+            const char = text[i];
+            yield new Promise((resolve) => {
+                document.addEventListener('keydown', function f({ key }) {
+                    if (key === char) {
+                        document.removeEventListener('keydown', f);
+                        resolve(key);
+                    }
+                })
+            })
+        }
+    }
+
+    async function countDown(el, sec) {
+        while (sec--) {
+            const minute = Math.floor(sec / 60);
+            const second = sec % 60;
+            const time = `${minute > 10 ? minute : `0${minute}`}:${second > 10 ? second : `0${second}`}`
+            el.innerText = time;
+            await wait(1000);
+        }
+    }
+
+    const typedEl = document.getElementsByClassName('typed')[0];
+    const startingEl = document.getElementsByClassName('starting')[0];
+    const countdownEl = document.getElementsByClassName('countdown')[0];
+
+    const panel = document.getElementsByClassName('panel')[0];
+    panel.addEventListener('click', start);
+
+    async function start() {
+        panel.innerText = text;
+        await starting(startingEl);
+        const countDownPromise = countDown(countdownEl, 20);
+        typedEl.innerText = '_'
+        for (const typing of typings(text)) {
+            const key = await Promise.race([countDownPromise, typing]);
+            if (key) {
+                typedEl.innerText = `${typedEl.innerText.slice(0, -1)}${key}_`;
+            } else {        //没有key 则为倒计时结束  结束游戏
+                break;
+            }
+        }
+        console.log("结束");
+    }
+
 </script>
 
 </html>
