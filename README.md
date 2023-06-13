@@ -9,20 +9,20 @@
 
 ### css
 
-- [布局 test](./CSS/testLayout.html)
-- [三栏布局](./CSS/threeColumnLayout.html)
-- [flex 布局](./CSS/flexLayout.html)
-- [鼠标横向滚动](./CSS/mouseHorizontalScrolling.html)
+- [布局 test](./css/testLayout.html)
+- [三栏布局](./css/threeColumnLayout.html)
+- [flex 布局](./css/flexLayout.html)
+- [鼠标横向滚动](./css/mouseHorizontalScrolling.html)
 
 ### js
 
-- [简易编译器](./JS/translater.js)
-- [debounce](./JS/debounce.js)
-- [throttle](./JS/throttle.js)
-- [Promise.All](./JS/myPromiseAll.js)
-- [并发任务控制](./JS/concurrentTaskControl.js)
-- [消除异步的传染性](./JS/clearAsynInfection.js)
-- [实现一个 promise](./JS/myPromise.js)
+- [简易编译器](./javascript/translater.js)
+- [debounce](./javascript/debounce.js)
+- [throttle](./javascript/throttle.js)
+- [Promise.All](./javascript/myPromiseAll.js)
+- [并发任务控制](./javascript/concurrentTaskControl.js)
+- [消除异步的传染性](./javascript/clearAsynInfection.js)
+- [实现一个 promise](./javascript/myPromise.js)
 
 ### ts
 
