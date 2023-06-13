@@ -22,6 +22,7 @@
 - [Promise.All](./JS/myPromiseAll.js)
 - [并发任务控制](./JS/concurrentTaskControl.js)
 - [消除异步的传染性](./JS/clearAsynInfection.js)
+- [实现一个 promise](./JS/myPromise.js)
 
 ### ts
 
