@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <head>
-  <title>css实现： 鼠标滚动实现横向滚动</title>
+  <title>css布局实现： 鼠标滚动实现横向滚动</title>
+  <!-- 
+  1. 定义三个盒子，盒子2的高等于盒子1的宽， 宽等于盒子1的高;  盒子3宽度自适应，高度与盒子1等高, 位置如图1
+  2. 盒子3以自身左上角旋转90deg, 如图2， 盒子2 `overflow: auto`，此时鼠标滚动，内容滚动
+  3. 盒子2移动（旋转+平移）到图3位置，即可实现鼠标滚动，内容横向滚动
+  -->
   <style>
     body {
       width: 800px;
       height: 400px;
-      overflow: hidden;
     }
-    .scroll-contianer {
+    .scroll-container {
       width: 100%;
       height: 100%;
     }
@@ -37,7 +41,7 @@
   </style>
 </head>
 <body>
-  <div class="scroll-contianer">
+  <div class="scroll-container">
     <div class="v-scroll" style="--scroll-width: 0; --scroll-height: 0">
       <div class="content">
         <!-- 这里是要滚动的内容 -->
@@ -61,7 +65,7 @@
   </div>
 
   <script>
-    const scrollContianer = document.querySelector(".scroll-contianer");
+    const scrollContainer = document.querySelector(".scroll-container");
     const vScroll = document.querySelector(".v-scroll");
     const resizeObserve = new ResizeObserver((entries) => {
       const { width, height } = entries[0].contentRect;
@@ -70,6 +74,6 @@
         `--scroll-width: ${width}; --scroll-height: ${height}`
       );
     });
-    resizeObserve.observe(scrollContianer);
+    resizeObserve.observe(scrollContainer);
   </script>
 </body>
