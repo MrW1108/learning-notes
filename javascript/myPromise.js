@@ -120,6 +120,50 @@ class MyPromise {
   }
 
   /** Promise.then */
+
+  catch(onRejcted) {
+    return this.then(undefined, onRejcted);
+  }
+
+  finally(onFinally) {
+    // 近似于then(onFinally, onFinally), 但是 onFinally 函数不用接收参数， finally返回的Promise状态与最后的状态一致（透明）
+    return this.then(
+      (res) => {
+        onFinally();
+        return res;
+      },
+      (err) => {
+        onFinally();
+        throw err;
+      }
+    );
+  }
+
+  // 参考 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve
+  static resolve(value) {
+    if (value instanceof MyPromise) {
+      return value;
+    }
+    let _resolve, _reject;
+    // 注意，静态方法中不能直接调用实例方法（如this.#isPromiseLike)
+    const p = new MyPromise((resolve, reject) => {
+      _resolve = resolve;
+      _reject = reject;
+    });
+    if (p.#isPromiseLike(value)) {
+      value.then(_resolve, _reject);
+    } else {
+      _resolve(value);
+    }
+    return p;
+  }
+
+  // 参考 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/reject
+  static reject(reason) {
+    return new MyPromise((_, reject) => {
+      reject(reason);
+    });
+  }
 }
 
 setTimeout(() => {
@@ -130,4 +174,3 @@ new MyPromise((resolve, reject) => {
 }).then((data) => {
   console.log(data);
 });
-console.log(3);

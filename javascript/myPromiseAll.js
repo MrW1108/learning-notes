@@ -4,20 +4,29 @@
  * @returns Promise
  */
 function myPromisAll(iterable) {
-  const promises = Array.from(iterable);
-  const len = promises.length;
-  var result = [];
+  let result = [];
+  let count = 0;
+  let fulfilledCount = 0;
   return new Promise((resolve, reject) => {
-    promises.forEach((p, index) => {
-      Promise.resolve(p).then(
-        (value) => {
-          result.push(value);
-          if (index + 1 === len) return resolve(result);
+    // 用for...of， 因为参数是 iterable 类型（Array, Set, Map )
+    for (const prom of iterable) {
+      const i = count;
+      count++;
+      Promise.resolve(prom).then(
+        (data) => {
+          result[i] = data;
+          fulfilledCount++;
+          if (fulfilledCount === count) {
+            resolve(result);
+          }
         },
         (reason) => {
           reject(reason);
         }
       );
-    });
+    }
+    if (count === 0) {
+      resolve(result);
+    }
   });
 }
