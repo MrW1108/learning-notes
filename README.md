@@ -23,6 +23,7 @@
 - [并发任务控制](./javascript/concurrentTaskControl.js)
 - [消除异步的传染性](./javascript/clearAsynInfection.js)
 - [实现一个 promise](./javascript/myPromise.js)
+- [通过路径字符串获取对象的值](./javascript//getPropByPath.js)
 
 ### ts
 
