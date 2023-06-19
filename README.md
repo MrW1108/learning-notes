@@ -1,4 +1,5 @@
 # 日常学习笔记
+
 ### js
 
 - [简易编译器](./javascript/translater.js)
@@ -9,7 +10,9 @@
 - [消除异步的传染性](./javascript/clearAsynInfection.js)
 - [实现一个 promise](./javascript/myPromise.js)
 - [通过路径字符串获取对象的值](./javascript//getPropByPath.js)
-
+- [实现函数柯里化](./javascript/currying.js)
+- [实现 compose 函数](./javascript/compose.js)
+- [实现 pipe 函数](./javascript/pipe.js)
 
 ### css
 
@@ -19,7 +22,8 @@
 - [鼠标横向滚动](./css/mouseHorizontalScrolling.html)
 
 ### 动画
-- [cavans实现动画](./animation/canvasAnimation.html)
+
+- [cavans 实现动画](./animation/canvasAnimation.html)
 
 ### 算法
 
