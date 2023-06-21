@@ -40,6 +40,8 @@ function addTask(time, name) {
   superTask.add(() => timeout(time)).then(() => console.log(`任务${name}完成`));
 }
 
+
+// test
 addTask(10000, 1); // 10000ms后输出: 任务1完成
 addTask(5000, 2); // 5000ms后输出: 任务2完成
 addTask(3000, 3); // 8000ms后输出: 任务3完成

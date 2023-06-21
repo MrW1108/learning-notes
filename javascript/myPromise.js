@@ -166,6 +166,8 @@ class MyPromise {
   }
 }
 
+
+// test
 setTimeout(() => {
   console.log(1);
 }, 0);

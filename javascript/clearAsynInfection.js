@@ -1,28 +1,6 @@
 // 消除异步的传染性
 // 思路：抛错误，执行两次
 // 但是这样写不是很有意义
-
-function getUser() {
-  return fetch(
-    "https://mu-json-server.typicode.com/typecode/demo/profile"
-  ).then((resp) => resp.json());
-}
-
-function m1() {
-  // other works
-  return getUser();
-}
-
-function m2() {
-  // other works
-  return m1();
-}
-
-function main() {
-  const user = m2();
-  console.log(user);
-}
-
 function run(func) {
   let cache = [];
   let i = 0;
@@ -72,4 +50,26 @@ function run(func) {
   }
 }
 
+
+// test
+function getUser() {
+  return fetch(
+    "https://mu-json-server.typicode.com/typecode/demo/profile"
+  ).then((resp) => resp.json());
+}
+
+function m1() {
+  // other works
+  return getUser();
+}
+
+function m2() {
+  // other works
+  return m1();
+}
+
+function main() {
+  const user = m2();
+  console.log(user);
+}
 run(main);
