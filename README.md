@@ -14,6 +14,10 @@
 - [实现 compose 函数](./javascript/compose.js)
 - [实现 pipe 函数](./javascript/pipe.js)
 
+### ts
+
+- [工具类型](./typescript/utilityTypes.ts)
+
 ### css
 
 - [布局 test](./css/testLayout.html)
