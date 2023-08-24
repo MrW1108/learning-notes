@@ -29,6 +29,10 @@
 
 - [cavans 实现动画](./animation/canvasAnimation.html)
 
+### webpack
+- [loaders](./webpack/loaders/)
+- [plugins](./webpack/plugins/)
+
 ### 算法
 
 1. [动态规划](./algorithm/DynamicProgramming/)
