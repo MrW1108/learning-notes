@@ -1,3 +1,6 @@
+/**
+ * 数字全排列， 元素不重复
+ */
 function permute(arr) {
   const res = [];
   function breaktrack(subArr, remianing) {

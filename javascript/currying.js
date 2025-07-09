@@ -18,5 +18,5 @@ function currying(fn, ...bindArgs) {
 const add = (a, b, c, d) => a + b + c + d;
 const curryingAdd = currying(add, 10);
 console.log(curryingAdd(1, 2, 3));
-console.log(curryingAdd(1, 2)(3));
+console.log(curryingAdd(1, 2));
 console.log(curryingAdd(1)(2)(3));
