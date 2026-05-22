@@ -1,0 +1,162 @@
+<!--pages/todo/todo.wxml-->
+<view class="page-container">
+  <!-- 头部搜索和筛选 -->
+  <view class="header-section">
+    <view class="search-bar">
+      <view class="search-input-wrapper">
+        <input class="search-input" placeholder="搜索待办事项..." 
+               value="{{searchKeyword}}" bindinput="onSearchInput" />
+        <view class="search-icon">🔍</view>
+      </view>
+    </view>
+    
+    <view class="filter-tabs">
+      <view class="tab-item {{filter === 'all' ? 'active' : ''}}" 
+            bindtap="setFilter" data-filter="all">
+        全部 ({{stats.total}})
+      </view>
+      <view class="tab-item {{filter === 'pending' ? 'active' : ''}}" 
+            bindtap="setFilter" data-filter="pending">
+        待完成 ({{stats.pending}})
+      </view>
+      <view class="tab-item {{filter === 'completed' ? 'active' : ''}}" 
+            bindtap="setFilter" data-filter="completed">
+        已完成 ({{stats.completed}})
+      </view>
+    </view>
+
+    <view class="sort-section" wx:if="{{filteredTodos.length > 0}}">
+      <view class="sort-label">排序：</view>
+      <view class="sort-options">
+        <view class="sort-item {{sortBy === 'createTime' ? 'active' : ''}}"
+              bindtap="setSortBy" data-sort="createTime">
+          时间
+        </view>
+        <view class="sort-item {{sortBy === 'priority' ? 'active' : ''}}"
+              bindtap="setSortBy" data-sort="priority">
+          优先级
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 待办列表 -->
+  <view class="todo-list" wx:if="{{filteredTodos.length > 0}}">
+    <view class="todo-item card" wx:for="{{filteredTodos}}" wx:key="id" 
+          bindtap="goToDetail" data-id="{{item.id}}">
+      <view class="todo-main">
+        <!-- 完成状态 -->
+        <view class="todo-checkbox {{item.completed ? 'checked' : ''}}" 
+              bindtap="toggleComplete" data-id="{{item.id}}" 
+              catch:tap="true">
+          <view class="checkbox-inner" wx:if="{{item.completed}}">✓</view>
+        </view>
+
+        <!-- 内容区域 -->
+        <view class="todo-content">
+          <view class="todo-header">
+            <view class="todo-title {{item.completed ? 'completed' : ''}}">
+              {{item.title}}
+            </view>
+            <view class="todo-priority priority-{{item.priority}}">
+              {{item.priorityText}}
+            </view>
+          </view>
+          
+          <view class="todo-desc" wx:if="{{item.content}}">{{item.content}}</view>
+          
+          <view class="todo-footer">
+            <view class="todo-time">{{item.createTimeText}}</view>
+            <view class="todo-actions">
+              <button class="action-btn edit-btn" 
+                      bindtap="editTodo" data-id="{{item.id}}" 
+                      catch:tap="true">
+                编辑
+              </button>
+              <button class="action-btn delete-btn" 
+                      bindtap="deleteTodo" data-id="{{item.id}}" 
+                      catch:tap="true">
+                删除
+              </button>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <view class="empty-icon" wx:if="{{filter === 'all'}}">📝</view>
+    <view class="empty-icon" wx:elif="{{filter === 'pending'}}">⏰</view>
+    <view class="empty-icon" wx:else>✅</view>
+    
+    <view class="empty-text" wx:if="{{searchKeyword}}">
+      未找到包含 "{{searchKeyword}}" 的待办事项
+    </view>
+    <view class="empty-text" wx:elif="{{filter === 'all'}}">
+      还没有待办事项，创建第一个吧！
+    </view>
+    <view class="empty-text" wx:elif="{{filter === 'pending'}}">
+      太棒了！没有待完成的事项
+    </view>
+    <view class="empty-text" wx:else>
+      还没有完成任何事项
+    </view>
+    
+    <button class="btn btn-primary" bindtap="addTodo" wx:if="{{!searchKeyword}}">
+      {{filter === 'all' ? '创建待办' : '添加待办'}}
+    </button>
+  </view>
+
+  <!-- 浮动添加按钮 -->
+  <view class="fab" bindtap="addTodo" wx:if="{{filteredTodos.length > 0}}">
+    <view class="fab-icon">+</view>
+  </view>
+</view>
+
+<!-- 编辑待办弹窗 -->
+<view class="modal-overlay" wx:if="{{showEditModal}}" bindtap="hideEditModal">
+  <view class="modal-content" catch:tap="true">
+    <view class="modal-header">
+      <view class="modal-title">编辑待办事项</view>
+      <view class="modal-close" bindtap="hideEditModal">×</view>
+    </view>
+    <view class="modal-body">
+      <view class="form-group">
+        <view class="form-label">标题 *</view>
+        <input class="form-input" placeholder="请输入待办事项标题" 
+               value="{{editTodo.title}}" bindinput="onEditTitleInput" />
+      </view>
+      <view class="form-group">
+        <view class="form-label">描述</view>
+        <textarea class="form-input form-textarea" placeholder="请输入详细描述（可选）" 
+                  value="{{editTodo.content}}" bindinput="onEditContentInput"></textarea>
+      </view>
+      <view class="form-group">
+        <view class="form-label">优先级</view>
+        <view class="priority-options">
+          <view class="priority-option {{editTodo.priority === 'high' ? 'active' : ''}}"
+                bindtap="setEditPriority" data-priority="high">
+            <view class="priority-color priority-high"></view>
+            <text>高优先级</text>
+          </view>
+          <view class="priority-option {{editTodo.priority === 'medium' ? 'active' : ''}}"
+                bindtap="setEditPriority" data-priority="medium">
+            <view class="priority-color priority-medium"></view>
+            <text>中优先级</text>
+          </view>
+          <view class="priority-option {{editTodo.priority === 'low' ? 'active' : ''}}"
+                bindtap="setEditPriority" data-priority="low">
+            <view class="priority-color priority-low"></view>
+            <text>低优先级</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="btn btn-secondary" bindtap="hideEditModal">取消</button>
+      <button class="btn btn-primary" bindtap="confirmEditTodo" disabled="{{!editTodo.title}}">保存</button>
+    </view>
+  </view>
+</view>

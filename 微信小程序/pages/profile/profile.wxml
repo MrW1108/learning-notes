@@ -1,0 +1,121 @@
+<!--pages/profile/profile.wxml-->
+<view class="page-container">
+  <!-- 用户信息卡片 -->
+  <view class="profile-card card">
+    <view class="avatar-section">
+      <image class="avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" 
+             mode="aspectFill" bindtap="chooseAvatar"></image>
+      <view class="user-info">
+        <view class="nickname">{{userInfo.nickName || '微信用户'}}</view>
+        <view class="user-desc">高效管理，轻松生活</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 数据统计 -->
+  <view class="stats-section">
+    <view class="section-title">数据统计</view>
+    <view class="stats-grid">
+      <view class="stat-card card">
+        <view class="stat-number">{{stats.total}}</view>
+        <view class="stat-label">总计</view>
+      </view>
+      <view class="stat-card card">
+        <view class="stat-number">{{stats.completed}}</view>
+        <view class="stat-label">已完成</view>
+      </view>
+      <view class="stat-card card">
+        <view class="stat-number">{{stats.pending}}</view>
+        <view class="stat-label">待完成</view>
+      </view>
+      <view class="stat-card card">
+        <view class="stat-number">{{stats.completionRate}}%</view>
+        <view class="stat-label">完成率</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-section">
+    <view class="menu-list">
+      <view class="menu-item card" bindtap="exportData">
+        <view class="menu-icon">📤</view>
+        <view class="menu-content">
+          <view class="menu-title">导出数据</view>
+          <view class="menu-desc">备份你的待办数据</view>
+        </view>
+        <view class="menu-arrow">></view>
+      </view>
+      
+      <view class="menu-item card" bindtap="importData">
+        <view class="menu-icon">📥</view>
+        <view class="menu-content">
+          <view class="menu-title">导入数据</view>
+          <view class="menu-desc">恢复备份的数据</view>
+        </view>
+        <view class="menu-arrow">></view>
+      </view>
+      
+      <view class="menu-item card" bindtap="clearCompleted">
+        <view class="menu-icon">🗑️</view>
+        <view class="menu-content">
+          <view class="menu-title">清理已完成</view>
+          <view class="menu-desc">删除所有已完成的待办</view>
+        </view>
+        <view class="menu-arrow">></view>
+      </view>
+      
+      <view class="menu-item card" bindtap="showSettings">
+        <view class="menu-icon">⚙️</view>
+        <view class="menu-content">
+          <view class="menu-title">应用设置</view>
+          <view class="menu-desc">个性化设置选项</view>
+        </view>
+        <view class="menu-arrow">></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 关于信息 -->
+  <view class="about-section">
+    <view class="about-card card">
+      <view class="about-title">关于待办小助手</view>
+      <view class="about-desc">
+        一款简洁高效的待办事项管理工具，帮助你更好地组织和管理日常任务。
+      </view>
+      <view class="version-info">
+        <text>版本号：v1.0.0</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 设置弹窗 -->
+<view class="modal-overlay" wx:if="{{showSettings}}" bindtap="hideSettings">
+  <view class="modal-content" catch:tap="true">
+    <view class="modal-header">
+      <view class="modal-title">应用设置</view>
+      <view class="modal-close" bindtap="hideSettings">×</view>
+    </view>
+    <view class="modal-body">
+      <view class="setting-item">
+        <view class="setting-label">自动保存</view>
+        <switch checked="{{settings.autoSave}}" bindchange="onAutoSaveChange" />
+      </view>
+      <view class="setting-item">
+        <view class="setting-label">完成提醒音</view>
+        <switch checked="{{settings.soundEnabled}}" bindchange="onSoundChange" />
+      </view>
+      <view class="setting-item">
+        <view class="setting-label">默认优先级</view>
+        <picker mode="selector" range="{{priorityOptions}}" range-key="label" 
+               value="{{defaultPriorityIndex}}" bindchange="onPriorityChange">
+          <view class="picker-text">{{priorityOptions[defaultPriorityIndex].label}}</view>
+        </picker>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="btn btn-primary btn-block" bindtap="saveSettings">保存设置</button>
+    </view>
+  </view>
+</view>

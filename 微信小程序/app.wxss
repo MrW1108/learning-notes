@@ -1,0 +1,304 @@
+/* app.wxss - 全局样式 */
+
+/* 全局样式重置 */
+page {
+  background-color: #f5f5f5;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 32rpx;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* 通用容器 */
+.container {
+  padding: 32rpx;
+}
+
+.page-container {
+  min-height: 100vh;
+  padding-bottom: 100rpx; /* 为底部导航留出空间 */
+}
+
+/* 卡片样式 */
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
+  margin-bottom: 24rpx;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 32rpx 32rpx 24rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.card-body {
+  padding: 32rpx;
+}
+
+.card-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #262626;
+  margin-bottom: 8rpx;
+}
+
+/* 按钮样式 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx 48rpx;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  border: none;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background: #1890ff;
+  color: #fff;
+}
+
+.btn-primary:active {
+  background: #096dd9;
+}
+
+.btn-success {
+  background: #52c41a;
+  color: #fff;
+}
+
+.btn-success:active {
+  background: #389e0d;
+}
+
+.btn-danger {
+  background: #ff4d4f;
+  color: #fff;
+}
+
+.btn-danger:active {
+  background: #cf1322;
+}
+
+.btn-secondary {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.btn-secondary:active {
+  background: #e6e6e6;
+}
+
+.btn-small {
+  padding: 16rpx 32rpx;
+  font-size: 28rpx;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* 表单样式 */
+.form-group {
+  margin-bottom: 32rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 12rpx;
+}
+
+.form-input {
+  width: 100%;
+  padding: 24rpx;
+  border: 2rpx solid #e6e6e6;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  border-color: #1890ff;
+}
+
+.form-textarea {
+  min-height: 160rpx;
+  resize: none;
+}
+
+/* 列表样式 */
+.list {
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  padding: 32rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  transition: background-color 0.3s;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+.list-item:active {
+  background-color: #f9f9f9;
+}
+
+.list-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.list-item-title {
+  font-size: 32rpx;
+  color: #262626;
+  margin-bottom: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-item-desc {
+  font-size: 28rpx;
+  color: #999;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-item-action {
+  margin-left: 24rpx;
+}
+
+/* 标签样式 */
+.tag {
+  display: inline-block;
+  padding: 8rpx 16rpx;
+  font-size: 24rpx;
+  border-radius: 8rpx;
+  background: #f5f5f5;
+  color: #666;
+}
+
+.tag-primary {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.tag-success {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.tag-warning {
+  background: #fffbe6;
+  color: #faad14;
+}
+
+.tag-danger {
+  background: #fff2f0;
+  color: #ff4d4f;
+}
+
+/* 优先级样式 */
+.priority-high {
+  color: #ff4d4f;
+}
+
+.priority-medium {
+  color: #faad14;
+}
+
+.priority-low {
+  color: #52c41a;
+}
+
+/* 工具类 */
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.mt-small {
+  margin-top: 16rpx;
+}
+
+.mt-medium {
+  margin-top: 32rpx;
+}
+
+.mt-large {
+  margin-top: 48rpx;
+}
+
+.mb-small {
+  margin-bottom: 16rpx;
+}
+
+.mb-medium {
+  margin-bottom: 32rpx;
+}
+
+.mb-large {
+  margin-bottom: 48rpx;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 120rpx 32rpx;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  color: #d9d9d9;
+  margin-bottom: 24rpx;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: #999;
+  margin-bottom: 32rpx;
+}
+
+/* 加载状态 */
+.loading {
+  text-align: center;
+  padding: 64rpx 32rpx;
+  color: #999;
+  font-size: 28rpx;
+}

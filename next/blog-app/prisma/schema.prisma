@@ -1,0 +1,73 @@
+// Prisma schema 文件
+// 学习要点:
+//   1. datasource: 指定数据库类型与连接 URL
+//   2. generator: 指定生成的 Client (TypeScript 类型 + 查询 SDK)
+//   3. model:     一张表 / 一个实体
+//   4. relation:  通过外键 / 关联表表达 1-N / N-N 关系
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────── 用户 ───────────
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String
+  avatarUrl String?
+  createdAt DateTime  @default(now())
+
+  posts     Post[]    // 1-N: 一个用户写多篇文章
+  comments  Comment[] // 1-N: 一个用户发多条评论
+}
+
+// ─────────── 文章 ───────────
+model Post {
+  id        Int       @id @default(autoincrement())
+  title     String
+  slug      String    @unique
+  content   String    @db.Text
+  published Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  // 1-N: 文章属于某个作者
+  authorId  Int
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  // 1-N: 文章下面的评论
+  comments  Comment[]
+
+  // N-N: 文章与标签 (Prisma 隐式多对多, 自动生成 _PostToTag 中间表)
+  tags      Tag[]
+
+  @@index([authorId])
+  @@index([published, createdAt])
+}
+
+// ─────────── 评论 ───────────
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+}
+
+// ─────────── 标签 ───────────
+model Tag {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  posts Post[] // N-N: 反向关联
+}

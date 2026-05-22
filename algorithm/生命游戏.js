@@ -21,13 +21,34 @@
 // 输入：board = [[1,1],[1,0]]
 // 输出：[[1,1],[1,1]]
 
-
 /**
  * @param {number[][]} board
  * @return {void} Do not return anything, modify board in-place instead.
  */
 var gameOfLife = function(board) {
-    
+  const boradCopy = JSON.parse(JSON.stringify(board));
+  for(let i = 0; i < boradCopy.length; i++) {
+    for(let j = 0; j < boradCopy[i].length; j++) {
+      let liveCount = 0;
+      for(let k = -1; k <=1; k++) {
+        for(let l = -1; l <=1; l++) {
+          const x = i + k;
+          const y = j + l;
+          if(boradCopy[x] && boradCopy[x][y] === 1 && !(k === 0 && l === 0)) {
+            liveCount++;
+          }
+        }
+      }
+      if(boradCopy[i][j] === 1 && (liveCount < 2 || liveCount > 3)) {
+        // 活细胞
+        board[i][j] = 0
+      }
+      if(boradCopy[i][j] === 0 && liveCount === 3) {
+        // 死细胞
+        board[i][j] = 1;
+      }
+    }
+  }
 };
 
 const args = [[0,1,0],[0,0,1],[1,1,1],[0,0,0]];

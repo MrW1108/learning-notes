@@ -1,0 +1,126 @@
+<!--index.wxml-->
+<view class="page-container">
+  <!-- 头部欢迎区域 -->
+  <view class="welcome-section">
+    <view class="welcome-card card">
+      <view class="welcome-content">
+        <view class="welcome-title">👋 你好！</view>
+        <view class="welcome-subtitle">欢迎使用待办小助手</view>
+        <view class="welcome-desc">让我们一起高效管理你的待办事项</view>
+      </view>
+      <view class="welcome-stats">
+        <view class="stat-item">
+          <view class="stat-number">{{stats.total}}</view>
+          <view class="stat-label">总计</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-number">{{stats.pending}}</view>
+          <view class="stat-label">待完成</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-number">{{stats.completed}}</view>
+          <view class="stat-label">已完成</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快速操作 -->
+  <view class="quick-actions">
+    <view class="section-title">快速操作</view>
+    <view class="actions-grid">
+      <view class="action-item" bindtap="addTodo">
+        <view class="action-icon">➕</view>
+        <view class="action-title">添加待办</view>
+        <view class="action-desc">创建新的待办事项</view>
+      </view>
+      <view class="action-item" bindtap="goToTodoList">
+        <view class="action-icon">📋</view>
+        <view class="action-title">查看全部</view>
+        <view class="action-desc">管理所有待办事项</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最近待办 -->
+  <view class="recent-todos">
+    <view class="section-title">
+      <text>最近待办</text>
+      <text class="more-btn" bindtap="goToTodoList">查看全部 ></text>
+    </view>
+    
+    <view class="todo-list" wx:if="{{recentTodos.length > 0}}">
+      <view class="todo-item card" wx:for="{{recentTodos}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+        <view class="todo-header">
+          <view class="todo-title">{{item.title}}</view>
+          <view class="todo-priority priority-{{item.priority}}">{{item.priorityText}}</view>
+        </view>
+        <view class="todo-content" wx:if="{{item.content}}">{{item.content}}</view>
+        <view class="todo-footer">
+          <view class="todo-time">{{item.createTimeText}}</view>
+          <view class="todo-actions">
+            <button class="btn btn-small btn-success" wx:if="{{!item.completed}}" 
+                    bindtap="completeTodo" data-id="{{item.id}}" 
+                    catch:tap="true">
+              完成
+            </button>
+            <view class="completed-badge" wx:else>✓ 已完成</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:else>
+      <view class="empty-icon">📝</view>
+      <view class="empty-text">暂无待办事项</view>
+      <button class="btn btn-primary" bindtap="addTodo">创建第一个待办</button>
+    </view>
+  </view>
+</view>
+
+<!-- 添加待办弹窗 -->
+<view class="modal-overlay" wx:if="{{showAddModal}}" bindtap="hideAddModal">
+  <view class="modal-content" catch:tap="true">
+    <view class="modal-header">
+      <view class="modal-title">添加待办事项</view>
+      <view class="modal-close" bindtap="hideAddModal">×</view>
+    </view>
+    <view class="modal-body">
+      <view class="form-group">
+        <view class="form-label">标题 *</view>
+        <input class="form-input" placeholder="请输入待办事项标题" 
+               value="{{newTodo.title}}" bindinput="onTitleInput" />
+      </view>
+      <view class="form-group">
+        <view class="form-label">描述</view>
+        <textarea class="form-input form-textarea" placeholder="请输入详细描述（可选）" 
+                  value="{{newTodo.content}}" bindinput="onContentInput"></textarea>
+      </view>
+      <view class="form-group">
+        <view class="form-label">优先级</view>
+        <view class="priority-options">
+          <view class="priority-option {{newTodo.priority === 'high' ? 'active' : ''}}"
+                bindtap="setPriority" data-priority="high">
+            <view class="priority-color priority-high"></view>
+            <text>高优先级</text>
+          </view>
+          <view class="priority-option {{newTodo.priority === 'medium' ? 'active' : ''}}"
+                bindtap="setPriority" data-priority="medium">
+            <view class="priority-color priority-medium"></view>
+            <text>中优先级</text>
+          </view>
+          <view class="priority-option {{newTodo.priority === 'low' ? 'active' : ''}}"
+                bindtap="setPriority" data-priority="low">
+            <view class="priority-color priority-low"></view>
+            <text>低优先级</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="btn btn-secondary" bindtap="hideAddModal">取消</button>
+      <button class="btn btn-primary" bindtap="confirmAddTodo" disabled="{{!newTodo.title}}">确定</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,117 @@
+<!--pages/detail/detail.wxml-->
+<view class="page-container">
+  <!-- 待办详情卡片 -->
+  <view class="detail-card card" wx:if="{{todo}}">
+    <!-- 头部 -->
+    <view class="detail-header">
+      <view class="todo-status {{todo.completed ? 'completed' : 'pending'}}">
+        <view class="status-icon">{{todo.completed ? '✓' : '⏰'}}</view>
+        <view class="status-text">{{todo.completed ? '已完成' : '待完成'}}</view>
+      </view>
+      <view class="todo-priority priority-{{todo.priority}}">
+        {{todo.priorityText}}优先级
+      </view>
+    </view>
+
+    <!-- 标题 -->
+    <view class="todo-title {{todo.completed ? 'completed' : ''}}">
+      {{todo.title}}
+    </view>
+
+    <!-- 描述 -->
+    <view class="todo-description" wx:if="{{todo.content}}">
+      {{todo.content}}
+    </view>
+    <view class="todo-description empty" wx:else>
+      暂无描述
+    </view>
+
+    <!-- 时间信息 -->
+    <view class="time-info">
+      <view class="time-item">
+        <view class="time-label">创建时间</view>
+        <view class="time-value">{{todo.createTimeText}}</view>
+      </view>
+      <view class="time-item" wx:if="{{todo.completedTime}}">
+        <view class="time-label">完成时间</view>
+        <view class="time-value">{{todo.completedTimeText}}</view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button class="btn btn-success btn-block" wx:if="{{!todo.completed}}" 
+              bindtap="completeTodo">
+        ✓ 标记为已完成
+      </button>
+      <button class="btn btn-secondary btn-block" wx:else 
+              bindtap="uncompleteTodo">
+        ↶ 标记为未完成
+      </button>
+      
+      <view class="button-row">
+        <button class="btn btn-primary" bindtap="editTodo">编辑</button>
+        <button class="btn btn-danger" bindtap="deleteTodo">删除</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-state" wx:if="{{loading}}">
+    <view class="loading-icon">⏳</view>
+    <view class="loading-text">加载中...</view>
+  </view>
+
+  <!-- 404状态 -->
+  <view class="not-found-state" wx:if="{{notFound}}">
+    <view class="not-found-icon">❓</view>
+    <view class="not-found-text">未找到该待办事项</view>
+    <button class="btn btn-primary" bindtap="goBack">返回</button>
+  </view>
+</view>
+
+<!-- 编辑待办弹窗 -->
+<view class="modal-overlay" wx:if="{{showEditModal}}" bindtap="hideEditModal">
+  <view class="modal-content" catch:tap="true">
+    <view class="modal-header">
+      <view class="modal-title">编辑待办事项</view>
+      <view class="modal-close" bindtap="hideEditModal">×</view>
+    </view>
+    <view class="modal-body">
+      <view class="form-group">
+        <view class="form-label">标题 *</view>
+        <input class="form-input" placeholder="请输入待办事项标题" 
+               value="{{editTodo.title}}" bindinput="onEditTitleInput" />
+      </view>
+      <view class="form-group">
+        <view class="form-label">描述</view>
+        <textarea class="form-input form-textarea" placeholder="请输入详细描述（可选）" 
+                  value="{{editTodo.content}}" bindinput="onEditContentInput"></textarea>
+      </view>
+      <view class="form-group">
+        <view class="form-label">优先级</view>
+        <view class="priority-options">
+          <view class="priority-option {{editTodo.priority === 'high' ? 'active' : ''}}"
+                bindtap="setEditPriority" data-priority="high">
+            <view class="priority-color priority-high"></view>
+            <text>高优先级</text>
+          </view>
+          <view class="priority-option {{editTodo.priority === 'medium' ? 'active' : ''}}"
+                bindtap="setEditPriority" data-priority="medium">
+            <view class="priority-color priority-medium"></view>
+            <text>中优先级</text>
+          </view>
+          <view class="priority-option {{editTodo.priority === 'low' ? 'active' : ''}}"
+                bindtap="setEditPriority" data-priority="low">
+            <view class="priority-color priority-low"></view>
+            <text>低优先级</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="btn btn-secondary" bindtap="hideEditModal">取消</button>
+      <button class="btn btn-primary" bindtap="confirmEditTodo" disabled="{{!editTodo.title}}">保存</button>
+    </view>
+  </view>
+</view>

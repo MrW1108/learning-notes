@@ -1,0 +1,48 @@
+<!--components/todo-item/todo-item.wxml-->
+<view class="todo-item {{completed ? 'completed' : ''}} {{priority}}" bindtap="onTap">
+  <!-- 完成状态复选框 -->
+  <view class="todo-checkbox {{completed ? 'checked' : ''}}" 
+        bindtap="onToggleComplete" 
+        catch:tap="true">
+    <view class="checkbox-inner" wx:if="{{completed}}">✓</view>
+  </view>
+
+  <!-- 内容区域 -->
+  <view class="todo-content">
+    <!-- 标题和优先级 -->
+    <view class="todo-header">
+      <view class="todo-title {{completed ? 'completed-text' : ''}}">
+        {{title}}
+      </view>
+      <view class="todo-priority priority-{{priority}}" wx:if="{{showPriority}}">
+        {{priorityText}}
+      </view>
+    </view>
+    
+    <!-- 描述 -->
+    <view class="todo-description" wx:if="{{content && showContent}}">
+      {{content}}
+    </view>
+    
+    <!-- 底部信息 -->
+    <view class="todo-footer" wx:if="{{showTime || showActions}}">
+      <view class="todo-time" wx:if="{{showTime}}">
+        {{createTimeText}}
+      </view>
+      <view class="todo-actions" wx:if="{{showActions}}">
+        <button class="action-btn edit-btn" 
+                wx:if="{{!completed && allowEdit}}"
+                bindtap="onEdit" 
+                catch:tap="true">
+          编辑
+        </button>
+        <button class="action-btn delete-btn" 
+                wx:if="{{allowDelete}}"
+                bindtap="onDelete" 
+                catch:tap="true">
+          删除
+        </button>
+      </view>
+    </view>
+  </view>
+</view>

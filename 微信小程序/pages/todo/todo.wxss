@@ -1,0 +1,373 @@
+/* pages/todo/todo.wxss */
+
+.page-container {
+  padding: 32rpx 32rpx 160rpx; /* 底部留出浮动按钮空间 */
+}
+
+/* 头部区域 */
+.header-section {
+  margin-bottom: 32rpx;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #f5f5f5;
+  padding-bottom: 24rpx;
+}
+
+/* 搜索栏 */
+.search-bar {
+  margin-bottom: 24rpx;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  height: 88rpx;
+  padding: 0 96rpx 0 32rpx;
+  background: #fff;
+  border: 2rpx solid #e6e6e6;
+  border-radius: 48rpx;
+  font-size: 32rpx;
+  box-sizing: border-box;
+}
+
+.search-input:focus {
+  border-color: #1890ff;
+}
+
+.search-icon {
+  position: absolute;
+  right: 32rpx;
+  font-size: 32rpx;
+  color: #999;
+}
+
+/* 筛选标签 */
+.filter-tabs {
+  display: flex;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 8rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 16rpx;
+  font-size: 28rpx;
+  color: #666;
+  border-radius: 12rpx;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  background: #1890ff;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* 排序选项 */
+.sort-section {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.sort-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.sort-options {
+  display: flex;
+  gap: 12rpx;
+}
+
+.sort-item {
+  padding: 12rpx 24rpx;
+  font-size: 28rpx;
+  color: #666;
+  background: #fff;
+  border: 2rpx solid #e6e6e6;
+  border-radius: 24rpx;
+  transition: all 0.3s;
+}
+
+.sort-item.active {
+  background: #1890ff;
+  color: #fff;
+  border-color: #1890ff;
+}
+
+/* 待办列表 */
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.todo-item {
+  padding: 32rpx;
+  transition: all 0.3s;
+}
+
+.todo-item:active {
+  transform: translateY(-2rpx);
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.12);
+}
+
+.todo-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 24rpx;
+}
+
+/* 复选框 */
+.todo-checkbox {
+  width: 48rpx;
+  height: 48rpx;
+  border: 3rpx solid #d9d9d9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  flex-shrink: 0;
+  margin-top: 8rpx;
+}
+
+.todo-checkbox.checked {
+  background: #52c41a;
+  border-color: #52c41a;
+}
+
+.checkbox-inner {
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+/* 内容区域 */
+.todo-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.todo-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+  gap: 16rpx;
+}
+
+.todo-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #262626;
+  flex: 1;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.todo-title.completed {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.todo-priority {
+  padding: 6rpx 12rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.todo-desc {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 24rpx;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.todo-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.todo-time {
+  font-size: 24rpx;
+  color: #999;
+  flex-shrink: 0;
+}
+
+.todo-actions {
+  display: flex;
+  gap: 16rpx;
+}
+
+.action-btn {
+  padding: 12rpx 24rpx;
+  font-size: 24rpx;
+  border: none;
+  border-radius: 8rpx;
+  background: #f5f5f5;
+  color: #666;
+  transition: all 0.3s;
+}
+
+.action-btn:active {
+  opacity: 0.8;
+}
+
+.edit-btn {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.delete-btn {
+  background: #fff2f0;
+  color: #ff4d4f;
+}
+
+/* 浮动添加按钮 */
+.fab {
+  position: fixed;
+  bottom: 120rpx; /* 在 tabbar 上方 */
+  right: 32rpx;
+  width: 112rpx;
+  height: 112rpx;
+  background: #1890ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(24, 144, 255, 0.4);
+  z-index: 100;
+  transition: all 0.3s;
+}
+
+.fab:active {
+  transform: scale(0.95);
+}
+
+.fab-icon {
+  font-size: 48rpx;
+  color: #fff;
+  font-weight: 300;
+}
+
+/* 弹窗样式（继承自全局样式） */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32rpx;
+  box-sizing: border-box;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 24rpx;
+  width: 100%;
+  max-width: 640rpx;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32rpx 32rpx 24rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #262626;
+}
+
+.modal-close {
+  font-size: 48rpx;
+  color: #999;
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-body {
+  flex: 1;
+  padding: 32rpx;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 24rpx;
+  padding: 24rpx 32rpx 32rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.modal-footer .btn {
+  flex: 1;
+}
+
+/* 优先级选择 */
+.priority-options {
+  display: flex;
+  gap: 16rpx;
+}
+
+.priority-option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx 16rpx;
+  border: 2rpx solid #e6e6e6;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  color: #666;
+  transition: all 0.3s;
+}
+
+.priority-option.active {
+  border-color: #1890ff;
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.priority-color {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  margin-right: 12rpx;
+}
+
+.priority-option text {
+  flex: 1;
+  text-align: center;
+}
